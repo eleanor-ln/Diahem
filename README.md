@@ -19,5 +19,5 @@ Diahem стиллер, возможности будут выложены поз
 
 
 
-<img width="720" height="716" alt="изображение" src="https://github.com/user-attachments/assets/12915d19-5731-4f70-a0df-44f47eb63082" />
+<img width="720" height="716" alt="cc" src="https://github.com/user-attachments/assets/12915d19-5731-4f70-a0df-44f47eb63082" />
 
