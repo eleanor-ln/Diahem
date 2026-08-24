@@ -1,7 +1,8 @@
 <img width="2086" height="754" alt="diahem" src="https://github.com/user-attachments/assets/f649c55d-750b-4c58-9895-c2c2ce8d54ed" />
-EN
+## EN
 Diahem stealer, futures will be updated later, pls wait.
-RU
+
+## RU
 Diahem стиллер, возможности будут выложены позже.
 
 ### Diahem stealer by EleanorMay & vicont
