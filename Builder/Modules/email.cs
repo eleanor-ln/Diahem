@@ -41,7 +41,7 @@ internal sealed class Email
         }
         catch (Exception ex)
         {
-            AnsiConsole.Foreground = ConsoleColor.DarkRed;
+            AnsiConsole.Foreground = ConsoleColor.Green;
             AnsiConsole.WriteLine("Email >> Connection test failed: " + ex.Message);
             return false;
         }

@@ -43,7 +43,7 @@ internal sealed class Discord
         }
         catch (Exception ex)
         {
-            AnsiConsole.Foreground = ConsoleColor.DarkRed;
+            AnsiConsole.Foreground = ConsoleColor.Green;
             Console.WriteLine(ex);
         }
 
